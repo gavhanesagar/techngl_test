@@ -63,10 +63,12 @@
                         <div class="form-group row">
                             <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
                             <div class="col-md-6">
-                            <select  name="region" id="region" class="form-control @error('country') is-invalid @enderror" >
+                            <select  name="country" id="country" class="form-control @error('country') is-invalid @enderror" >
                                 @foreach($countries as $country)
                                     <option value="{{$country['country_code']}}"
-                                    @if($locationData->countryCode == $country['country_code'])
+                                    @if (old('country') == $country['country_code'])
+                                        selected="selected"
+                                    @elseif($locationData->countryCode == $country['country_code'])
                                         selected="selected"
                                     @endif>{{$country['name']}}</option>
                                 @endforeach                

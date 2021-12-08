@@ -67,7 +67,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'country' => ['required']
         ]);
     }
 
@@ -86,11 +87,22 @@ class RegisterController extends Controller
         ]);
 
         $locationData = Location::get();
-        
+        $countryCode =$locationData->countryCode;
+        $countryName = $locationData->countryName;
+
+        if (!empty($data)) {
+            $countryData = Country::where('country_code',$data['country'])
+                ->first()
+                ->toArray();
+            
+            $countryName = $countryData['name'];
+            $countryCode = $data['country'];
+        }
+
         UserInfo::create([
             'user_id' => $user->id,
-            'country_code' => $locationData->countryCode,
-            'country' => $locationData->countryName,
+            'country_code' => $countryCode,
+            'country' => $countryName,
             'city' => $locationData->cityName,
             'postal_code' => $locationData->zipCode,
             'ip_address' => $locationData->ip,

@@ -36,6 +36,10 @@
                                 <td>{{$userInfo->country_code}}</td>
                             </tr>
                             <tr>
+                                <td>Country Name</td>
+                                <td>{{$userInfo->country}}</td>
+                            </tr>
+                            <tr>
                                 <td>City</td>
                                 <td>{{$userInfo->city}}</td>
                             </tr>
